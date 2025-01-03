@@ -1,5 +1,5 @@
-// components/CustomSplash.tsx
-import { View, Image, StyleSheet, Dimensions } from 'react-native';
+// components/Splashscreen.tsx
+import { View, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import Animated, { 
@@ -9,7 +9,7 @@ import Animated, {
   withSequence
 } from 'react-native-reanimated';
 
-const { width, height } = Dimensions.get('window');
+const AnimatedView = Animated.createAnimatedComponent(View);
 
 export default function CustomSplash() {
   const router = useRouter();
@@ -33,36 +33,20 @@ export default function CustomSplash() {
   }));
 
   return (
-    <Animated.View style={[styles.container, animatedStyle]}>
-
-      <View style={styles.logoContainer}>
+    <AnimatedView 
+      style={[animatedStyle]}
+      className="flex-1 bg-white"
+    >
+      <Image 
+        source={require('../assets/background.png')}
+        className="absolute w-full h-full"
+      />
+      <View className="absolute inset-0 items-center justify-center">
         <Image 
-          source={require('../assets/images/log.png')}  
-          style={styles.logo}
+          source={require('../assets/logo.png')}
+          className="w-40 h-40"
         />
       </View>
-    </Animated.View>
+    </AnimatedView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor:'#fff',
-  },
-  logoContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logo: {
-    width: 150, 
-    height: 150, 
-    resizeMode: 'contain',
-    borderRadius:75,
-  },
-});
